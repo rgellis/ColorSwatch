@@ -1,0 +1,6 @@
+<?php
+
+class RMG_ColorSwatch_Block_Adminhtml_Catalog_Product_Attribute_Edit_Form extends Mage_Adminhtml_Block_Catalog_Product_Attribute_Edit_Form
+{
+
+}

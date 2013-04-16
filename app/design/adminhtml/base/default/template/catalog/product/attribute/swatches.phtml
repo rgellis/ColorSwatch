@@ -1,0 +1,38 @@
+<?php if (count($this->getOptionValues()) < 1): ?>
+
+	<div>
+		<ul class="messages">
+		    <li class="notice-msg">
+		        <ul>
+		            <li><?php echo Mage::helper('catalog')->__('If you do not specify options you cannot set up swatches.') ?></li>
+		        </ul>
+		    </li>
+		</ul>
+	</div>
+	
+<?php else: ?>
+
+<div class="entity-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('catalog')->__('Enable Swatches') ?></h4>
+    </div>
+    <div class="box">
+            <div class="hor-scroll">
+            <table class="dynamic-grid" cellspacing="0" id="attribute-swatchenabled-table">
+                <tr>
+                	<td>
+                		Product View: yes/no
+                	</td>
+                </tr>
+                <tr>
+                	<td>
+                		Catalog View: yes/no
+                	</td>
+                </tr>
+            </table>
+            </div>
+    </div>
+</div>
+<br/>
+
+<?php endif; ?>

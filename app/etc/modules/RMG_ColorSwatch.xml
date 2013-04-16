@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <RMG_ColorSwatch>
+            <active>true</active>
+            <codePool>local</codePool>
+        </RMG_ColorSwatch>
+    </modules>
+</config>
