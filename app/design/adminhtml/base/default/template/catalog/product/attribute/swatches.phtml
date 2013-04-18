@@ -1,4 +1,9 @@
-<?php if (count($this->getOptionValues()) < 1): ?>
+<?php
+	$storeID = Mage::app()->getStore()->getStoreId();
+    $options = $this->getStoreOptionValues($storeID);
+?>
+
+<?php if (count($this->getOptionValues($storeID)) < 1): ?>
 
 	<div>
 		<ul class="messages">
@@ -9,30 +14,83 @@
 		    </li>
 		</ul>
 	</div>
-	
+
 <?php else: ?>
 
-<div class="entity-edit">
-    <div class="entry-edit-head">
-        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('catalog')->__('Enable Swatches') ?></h4>
-    </div>
-    <div class="box">
+	<div class="entity-edit">
+	    <div class="entry-edit-head">
+	        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('catalog')->__('Enable Swatches') ?></h4>
+	    </div>
+	    <div class="box">
             <div class="hor-scroll">
-            <table class="dynamic-grid" cellspacing="0" id="attribute-swatchenabled-table">
-                <tr>
-                	<td>
-                		Product View: yes/no
-                	</td>
-                </tr>
-                <tr>
-                	<td>
-                		Catalog View: yes/no
-                	</td>
-                </tr>
-            </table>
+	            <table class="form-list" cellspacing="0" id="table_swatchenabled">
+	                <tr>
+	                	<td class="label">
+	                		<label for="swatch[product_view]">Product View</label>
+	                	</td>
+	                	<td class="value">
+	                		<select id="swatch-enable-productview" name="swatch[product_view]" class="select">
+	                			<option value="1">Yes</option>
+	                			<option value="0" selected="selected">No</option>
+	                		</select>
+	                	</td>
+	                </tr>
+	                <tr>
+	                	<td class="label">
+	                		<label for="swatch[catalog_view]">Catalog View</label>
+	                	</td>
+	                	<td class="value">
+	                		<select id="swatch-enable-catalogview" name="swatch[catalog_view]" class="select">
+	                			<option value="1">Yes</option>
+	                			<option value="0" selected="selected">No</option>
+	                		</select>
+	                	</td>
+	                </tr>
+	            </table>
             </div>
-    </div>
-</div>
-<br/>
+	    </div>
+	</div>
+	<br/>
+	<div class="entity-edit">
+	    <div class="entry-edit-head">
+	        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('catalog')->__('Swatch Images') ?></h4>
+	    </div>
+	    <div class="box">
+            <div class="hor-scroll">
+            	<div class="grid">
+		            <table class="data border" cellspacing="0" id="attribute-swatchimages-grid" width="100%">
+						<colgroup>
+							<col width="1">
+							<col width="1">
+							<col>
+						</colgroup>
+
+		            	<tr class="headings">
+		            		<th>Select Option</th>
+		            		<th>Image</th>
+	        				<th>Option Label</th>
+	        			</tr>
+		                
+	                	<?php foreach ($this->getOptionValues($storeID) as $swatch): ?>
+		                	<tr>
+		                		<td style="text-align:center;"><input type="radio" name="swatchoptions" value="<?php echo $swatch->getId(); ?>" /></td>
+		                		<td>No image</td>
+		                		<td><?php echo $swatch->getValue(); ?></td>
+		                	</tr>
+	                	<?php endforeach; ?>
+
+	                	<tfoot>
+	                		<tr>
+	                			<td colspan="100" class="last" style="padding:8px;">
+	                				<?php echo $this->getLayout()->createBlock('adminhtml/media_uploader')->toHtml(); ?>
+	                			</td>
+	                		</tr>
+	                	</tfoot>
+		            	
+		            </table>
+		        </div>
+            </div>
+	    </div>
+	</div>
 
 <?php endif; ?>

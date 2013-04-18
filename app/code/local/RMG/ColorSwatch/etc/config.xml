@@ -23,6 +23,17 @@
             </updates>
         </layout>
     </frontend>-->
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <RMG_ColorSwatch before="Mage_Adminhtml">RMG_ColorSwatch</RMG_ColorSwatch>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
     <global>
         <!--<models>
             <colorswatch>

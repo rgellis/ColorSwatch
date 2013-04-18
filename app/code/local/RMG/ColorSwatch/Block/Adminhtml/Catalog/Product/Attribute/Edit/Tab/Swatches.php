@@ -32,7 +32,7 @@ class RMG_ColorSwatch_Block_Adminhtml_Catalog_Product_Attribute_Edit_Tab_Swatche
      *
      * @return array
      */
-    public function getOptionValues()
+    public function getOptionValues($storeId)
     {
         $attributeType = $this->getAttributeObject()->getFrontendInput();
         $defaultValues = $this->getAttributeObject()->getDefaultValue();
@@ -71,12 +71,17 @@ class RMG_ColorSwatch_Block_Adminhtml_Catalog_Product_Attribute_Edit_Tab_Swatche
                 $value['id'] = $option->getId();
                 $value['sort_order'] = $option->getSortOrder();
                 foreach ($this->getStores() as $store) {
-                    $storeValues = $this->getStoreOptionValues($store->getId());
-                    if (isset($storeValues[$option->getId()])) {
-                        $value['store'.$store->getId()] = htmlspecialchars($storeValues[$option->getId()]);
-                    }
-                    else {
-                        $value['store'.$store->getId()] = '';
+
+                    if ($store->getId() == $storeId) {
+
+                        $storeValues = $this->getStoreOptionValues($store->getId());
+                        if (isset($storeValues[$option->getId()])) {
+                            $value['value'] = htmlspecialchars($storeValues[$option->getId()]);
+                        }
+                        else {
+                            $value['value'] = '';
+                        }
+
                     }
                 }
                 $values[] = new Varien_Object($value);
