@@ -28,7 +28,7 @@ class RMG_ColorSwatch_Block_Adminhtml_Catalog_Product_Attribute_Edit_Tab_Swatche
     }
 
     /**
-     * Retrieve attribute option values if attribute input type select or multiselect
+     * Retrieve attribute option values if attribute input type select
      *
      * @return array
      */
@@ -55,21 +55,33 @@ class RMG_ColorSwatch_Block_Adminhtml_Catalog_Product_Attribute_Edit_Tab_Swatche
         if (is_null($values)) {
             $values = array();
             $optionCollection = Mage::getResourceModel('eav/entity_attribute_option_collection')
-                ->setAttributeFilter($this->getAttributeObject()->getId())
-                ->setPositionOrder('desc', true)
-                ->load();
+                ->setAttributeFilter($this->getAttributeObject()->getId());
+                //->setPositionOrder('desc', true)
+                //->load();
+            $optionCollection->getSelect()
+                ->joinLeft(array('swatch'=>'eav_attribute_option_swatch'),'swatch.option_id=main_table.option_id')
+                ->reset(Zend_Db_Select::COLUMNS)
+                ->columns(array(
+                    'option_id' => 'main_table.option_id',
+                    'swatch_id' => 'swatch.swatch_id',
+                    'store_id'  => 'swatch.store_id',
+                    'path'      => 'swatch.path'
+                ));
 
             foreach ($optionCollection as $option) {
+
                 $value = array();
-                if (in_array($option->getId(), $defaultValues)) {
+                /*if (in_array($option->getId(), $defaultValues)) {
                     $value['checked'] = 'checked="checked"';
                 } else {
                     $value['checked'] = '';
-                }
+                }*/
 
-                $value['intype'] = $inputType;
+                $value['swatch_id'] = $option->getSwatchId();
+                $value['path'] = $option->getPath();
+                //$value['intype'] = $inputType;
                 $value['id'] = $option->getId();
-                $value['sort_order'] = $option->getSortOrder();
+                //$value['sort_order'] = $option->getSortOrder();
                 foreach ($this->getStores() as $store) {
 
                     if ($store->getId() == $storeId) {

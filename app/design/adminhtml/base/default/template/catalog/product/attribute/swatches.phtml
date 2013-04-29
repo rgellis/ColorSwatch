@@ -60,33 +60,42 @@
             	<div class="grid">
 		            <table class="data border" cellspacing="0" id="attribute-swatchimages-grid" width="100%">
 						<colgroup>
-							<col width="1">
-							<col width="1">
-							<col>
+							<col width="1" />
+							<col width="1" />
+							<col />
+							<col width="1" />
 						</colgroup>
 
 		            	<tr class="headings">
-		            		<th>Select Option</th>
 		            		<th>Image</th>
 	        				<th>Option Label</th>
+	        				<th>Upload Image</th>
+	        				<th>Remove Image</th>
 	        			</tr>
 		                
-	                	<?php foreach ($this->getOptionValues($storeID) as $swatch): ?>
+	                	<?php foreach ($this->getOptionValues($storeID) as $option): ?>
 		                	<tr>
-		                		<td style="text-align:center;"><input type="radio" name="swatchoptions" value="<?php echo $swatch->getId(); ?>" /></td>
-		                		<td>No image</td>
-		                		<td><?php echo $swatch->getValue(); ?></td>
+		                		
+		                		<?php if ($option->getPath() == ''): ?>
+		                			<td>No image</td>
+		                		<?php else: ?>
+		                			<td style="text-align:center;padding-top:5px;">
+		                				<img width="30" height="30" src="<?php echo Mage::getBaseUrl('media') . 'attribute_swatches/' . $option->getPath(); ?>" />
+		                			</td>
+		                		<?php endif; ?>
+
+		                		<td>
+		                			<?php echo $option->getValue(); ?>
+		                			<input type="hidden" name="swatch[<?php echo $option->getId(); ?>][store_id]" value="<?php echo $storeID; ?>" />
+		                		</td>
+		                		<td><input type="file" name="swatch-<?php echo $option->getId(); ?>" /></td>
+		                		<td style="text-align:center;">
+		                			<?php if ($option->getSwatchId()): ?>
+		                			<input type="checkbox" name="swatch[<?php echo $option->getSwatchId(); ?>][remove]" value="1" />
+		                			<?php endif; ?>
+		                		</td>
 		                	</tr>
 	                	<?php endforeach; ?>
-
-	                	<tfoot>
-	                		<tr>
-	                			<td colspan="100" class="last" style="padding:8px;">
-	                				<?php echo $this->getLayout()->createBlock('adminhtml/media_uploader')->toHtml(); ?>
-	                			</td>
-	                		</tr>
-	                	</tfoot>
-		            	
 		            </table>
 		        </div>
             </div>

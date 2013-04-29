@@ -35,7 +35,7 @@
         </routers>
     </admin>
     <global>
-        <!--<models>
+        <models>
             <colorswatch>
                 <class>RMG_ColorSwatch_Model</class>
                 <resourceModel>colorswatch_mysql4</resourceModel>
@@ -43,12 +43,14 @@
             <colorswatch_mysql4>
                 <class>RMG_ColorSwatch_Model_Mysql4</class>
                 <entities>
-                    <colorswatch>
-                        <table>colorswatch</table>
-                    </colorswatch>
+                    <!-- the first child of entities defines the ClassName in the resource model -->
+                    <!-- it must be camel-cased correctly for Magento to map the DB table -->
+                    <colorSwatch>
+                        <table>eav_attribute_option_swatch</table>
+                    </colorSwatch>
                 </entities>
             </colorswatch_mysql4>
-        </models>-->
+        </models>
         <resources>
             <colorswatch_setup>
                 <setup>
@@ -73,6 +75,7 @@
             <adminhtml>
                 <rewrite>
                     <catalog_product_attribute_edit_tabs>RMG_ColorSwatch_Block_Adminhtml_Catalog_Product_Attribute_Edit_Tabs</catalog_product_attribute_edit_tabs>
+                    <catalog_product_attribute_edit_form>RMG_ColorSwatch_Block_Adminhtml_Catalog_Product_Attribute_Edit_Form</catalog_product_attribute_edit_form>
                 </rewrite>
             </adminhtml>
             <colorswatch>
